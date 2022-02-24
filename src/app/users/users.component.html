@@ -1,0 +1,14 @@
+<p>users works!</p>
+<ul>
+    <!-- <li>{{users[0]}}</li>
+    <li>{{users[1]}}</li>
+    <li>{{users[2]}}</li>
+    <li>{{users[3]}}</li> -->
+    <li 
+    *ngFor="let user of users" 
+    (click)="selectUser(user)">
+        {{user.id}}, {{user.name}}, {{user.email}},
+        {{user.lastLogin}},{{user.password}}
+    </li>
+</ul>
+<p *ngIf="selectedUser">selected user: <strong>{{selectedUser.name}}</strong></p>

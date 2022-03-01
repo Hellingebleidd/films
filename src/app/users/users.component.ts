@@ -22,10 +22,13 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     // this.users = this.usersService.getLocalUsersSyn()
     // this.usersService.getLocalUsers().subscribe(u => this.users = u)
-    this.usersService.getUsers().subscribe(u => this.users = u)
+    this.usersService.getUsers().subscribe(u => {
+      console.log('users from server: ', u)
+      this.users = u
+    })
   }
 
-  selectUser(user: User){
+  selectUser(user: User) {
     this.selectedUser = user;
   }
 

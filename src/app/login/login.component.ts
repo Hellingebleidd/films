@@ -18,4 +18,8 @@ export class LoginComponent implements OnInit {
   getAuth(): string {
     return JSON.stringify(this.auth)
   }
+
+  onSubmit(){
+    
+  }
 }

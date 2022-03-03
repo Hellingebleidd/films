@@ -1,26 +1,35 @@
-<p>aktualny auth: {{getAuth()}}</p>
-<div>
-    <!-- <form>
-        <label>Meno: </label>
-        <input type="text" [(ngModel)]="auth.name" name="name">
-        <label>Heslo: </label>
-        <input type="text" [(ngModel)]="auth.password" name="passwd">
-    </form>     -->
-    <form>
-        <mat-form-field appearance="fill">
-            <mat-label>Enter your username</mat-label>
-            <input matInput [(ngModel)]="auth.name" name="name">
-            <mat-hint>Enter your username</mat-hint>
-        </mat-form-field>
+<!-- <p>aktualny auth: {{getAuth()}}</p> -->
 
-        <mat-form-field appearance="fill">
-            <mat-label>Enter your password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="passwd">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-hint>Enter your password</mat-hint>
-        </mat-form-field>
+
+    <form (ngSubmit)="onSubmit()">
+        <mat-card class="login-card">
+            <mat-card-header>
+                <mat-card-title>Login page</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your username</mat-label>
+                    <input matInput [(ngModel)]="auth.name" name="name">
+                    <mat-hint>Enter your username</mat-hint>
+                </mat-form-field>
+                <!-- <br /> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="passwd">
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-hint>Enter your password</mat-hint>
+                </mat-form-field>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit">Log In</button>
+                <!-- <button mat-raised-button color="primary" type="submit">Register</button> -->
+            </mat-card-actions>
+        </mat-card>
+
+
     </form>
-</div>

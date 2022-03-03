@@ -11,6 +11,7 @@ import { P404Component } from './p404/p404.component';
 import { FormsModule } from '@angular/forms';
 import { ExtendedUsersComponent } from './extended-users/extended-users.component';
 import { MaterialModule } from 'src/modules/material.module';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { MaterialModule } from 'src/modules/material.module';
     UsersComponent,
     LoginComponent,
     P404Component,
-    ExtendedUsersComponent
+    ExtendedUsersComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

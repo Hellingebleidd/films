@@ -1,5 +1,6 @@
 import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Auth } from 'src/entities/auth';
 import { UsersService } from 'src/services/users.service';
 
@@ -9,12 +10,13 @@ import { UsersService } from 'src/services/users.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  auth = new Auth("Lucia","lucia")
+  auth = new Auth("Lucia", "lucia")
   hide = true
   errorMessage = ''
 
   //private => userservice sa stava instancnou premennou
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,7 +32,7 @@ export class LoginComponent implements OnInit {
         next: success => {
           if (success) {
             console.log("login successful")
-            this.errorMessage = ''
+            this.router.navigateByUrl('/extended-users')
           } else {
             this.errorMessage = "incorrect password or username"
           }

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class UsersService {
 
   private token = ''
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, 
+              private messageService: SnackbarService) { }
 
   //synchronne
   public getLocalUsersSyn(): User[] {
@@ -43,9 +45,14 @@ export class UsersService {
     return this.http.post(this.url + 'login', auth, { responseType: 'text' }).pipe(
       map(token=>{
         this.token=token
+        this.messageService.successMessage("user "+auth.name+"logged in  successfully ")
         return true
       }),
       catchError(error => {
+        if(error instanceof HttpErrorResponse){
+          if(error.status==0)  this.messageService.errorMessage("server uavailible")
+          if(error.status == 401) this.messageService.errorMessage("Incorrect password or username")          
+        }
         //??????
         return of(false)
       })

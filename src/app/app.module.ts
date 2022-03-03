@@ -1,13 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
-import {MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCardModule} from '@angular/material/card';
-
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
@@ -16,24 +9,22 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { P404Component } from './p404/p404.component';
 import { FormsModule } from '@angular/forms';
+import { ExtendedUsersComponent } from './extended-users/extended-users.component';
+import { MaterialModule } from 'src/modules/material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersComponent,
     LoginComponent,
-    P404Component
+    P404Component,
+    ExtendedUsersComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    MaterialModule,
     BrowserAnimationsModule,
-    MatTableModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
     FormsModule,
     AppRoutingModule
   ],

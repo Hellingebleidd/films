@@ -1,11 +1,10 @@
 <!-- <p>aktualny auth: {{getAuth()}}</p> -->
 
-<!-- <h3>{{errorMessage}}</h3> -->
 <form (ngSubmit)="onSubmit()">
     <mat-card class="login-card">
         <mat-card-header>
             <mat-card-title>Login page</mat-card-title>
-            <mat-card-subtitle style="color: orangered;">{{errorMessage}}</mat-card-subtitle>
+            <mat-card-subtitle style="color: tomato;">{{errorMessage}}</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
@@ -14,7 +13,6 @@
                 <input matInput [(ngModel)]="auth.name" name="name">
                 <mat-hint>Enter your username</mat-hint>
             </mat-form-field>
-            <!-- <br /> -->
             <mat-form-field appearance="fill">
                 <mat-label>Enter your password</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="passwd">
@@ -28,7 +26,6 @@
 
         <mat-card-actions>
             <button mat-raised-button color="primary" type="submit">Log In</button>
-            <!-- <button mat-raised-button color="primary" type="submit">Register</button> -->
         </mat-card-actions>
     </mat-card>
 

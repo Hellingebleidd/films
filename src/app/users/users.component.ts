@@ -14,8 +14,8 @@ export class UsersComponent implements OnInit {
     new User("Eliot", "-", 13),
     new User("Eskel", "-", 4)
   ]
-
   selectedUser: User | undefined = undefined
+  columnsToDisplay = ['id','name', 'email']
 
   constructor(private usersService: UsersService) { }
 

@@ -1,5 +1,7 @@
+import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { Auth } from 'src/entities/auth';
+import { UsersService } from 'src/services/users.service';
 
 @Component({
   selector: 'app-login',
@@ -7,10 +9,12 @@ import { Auth } from 'src/entities/auth';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  auth = new Auth()
+  auth = new Auth("Lucia","lucia")
   hide = true
+  errorMessage = ''
 
-  constructor() { }
+  //private => userservice sa stava instancnou premennou
+  constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
   }
@@ -19,7 +23,18 @@ export class LoginComponent implements OnInit {
     return JSON.stringify(this.auth)
   }
 
-  onSubmit(){
-    
+  onSubmit() {
+    //subscribe na zachytnu funkciu aby data nevypadavli prec
+    this.usersService.login(this.auth).subscribe(
+      {
+        next: success => {
+          if (success) {
+            console.log("login successful")
+            this.errorMessage = ''
+          } else {
+            this.errorMessage = "incorrect password or username"
+          }
+        }
+      })
   }
 }

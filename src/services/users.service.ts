@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user';
 
 @Injectable({
@@ -17,6 +18,8 @@ export class UsersService {
     new User("EskelS", "-", 4)
   ]
 
+  private token = ''
+
   constructor(private http: HttpClient) { }
 
   //synchronne
@@ -32,6 +35,20 @@ export class UsersService {
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url + 'users').pipe(
       map(jsonArray => jsonArray.map(jsonUser => User.clone(jsonUser)))
+    )
+  }
+
+  public login(auth: Auth): Observable<boolean> {
+    //vezme telo a vrati mi ho ako string
+    return this.http.post(this.url + 'login', auth, { responseType: 'text' }).pipe(
+      map(token=>{
+        this.token=token
+        return true
+      }),
+      catchError(error => {
+        //??????
+        return of(false)
+      })
     )
   }
 

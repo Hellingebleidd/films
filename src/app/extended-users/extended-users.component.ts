@@ -9,7 +9,7 @@ import { UsersService } from 'src/services/users.service';
 })
 export class ExtendedUsersComponent implements OnInit {
 
-  columnsToDisplay = ['id','name', 'email', 'active', 'lastLogin', 'groups']
+  columnsToDisplay = ['id','name', 'email', 'active', 'lastLogin', 'groups', 'permissions']
   users: User[] = []
 
   constructor(private userService: UsersService) { }

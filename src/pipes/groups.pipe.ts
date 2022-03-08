@@ -7,7 +7,13 @@ import { Group } from 'src/entities/group';
 export class GroupsPipe implements PipeTransform {
 
   transform(groups: Group[], option?: string): string {
-    return groups.map(g => g.name).join(', ');
+    if (option === 'permissions') {
+      return groups.flatMap(g => g.permissions).
+      reduce((acc:string[], perm:string) => acc.includes(perm) ? acc: [...acc, perm], []).
+      join(', ')
+    } else {
+      return groups.map(g => g.name).join(', ');
+    }
   }
 
 }

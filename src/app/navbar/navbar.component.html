@@ -1,16 +1,25 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button aria-label="menu icon">
-      <mat-icon>menu</mat-icon>
+  <button mat-icon-button aria-label="menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Films app</span>
+  <span></span>
+  <span><a routerLink="users" mat-button routerLinkActive="mat-accent"> Users</a></span>
+  <span><a routerLink="extended-users" mat-button routerLinkActive="mat-accent">Extended</a></span>
+
+  <span class="spacer"></span>
+
+  <div *ngIf="username; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock>
+    {{username}}
+    <button type="button" mat-button (click)="logout()">
+      <mat-icon>logout</mat-icon> Log Out
     </button>
-    <span>Films app</span>
-    <span></span>
-    <span><a routerLink="users" mat-button routerLinkActive="mat-accent"> Users</a></span>
-    <span><a routerLink="extended-users" mat-button routerLinkActive="mat-accent">Extended</a></span>
-
-    <span class="spacer"></span>
-
-    <a mat-button aria-label="Log In" routerLink="login"  routerLinkActive="mat-accent">
+  </ng-template>
+  <ng-template #elseBlock>
+    <a mat-button aria-label="Log In" routerLink="login" routerLinkActive="mat-accent">
       <mat-icon>login</mat-icon> Log In
     </a>
+  </ng-template>
 
-  </mat-toolbar>
+</mat-toolbar>

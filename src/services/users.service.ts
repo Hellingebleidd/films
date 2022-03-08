@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, Subscriber } from 'rxjs';
 import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user';
 import { SnackbarService } from './snackbar.service';
@@ -10,7 +10,7 @@ import { SnackbarService } from './snackbar.service';
 })
 export class UsersService {
   private url = 'http://localhost:8080/'
-
+  private loggedUserSubscriber: Subscriber<string | null> | undefined
   //lokalni userovia
   private users = [
     new User("ZuzankaS", "zuzanka@z.sk", 1, new Date("2022-02-24"), 'heslo'),
@@ -18,7 +18,7 @@ export class UsersService {
     new User("EliotS", "-", 13),
     new User("EskelS", "-", 4)
   ]
-
+  
   constructor(private http: HttpClient,
     private messageService: SnackbarService) { }
 
@@ -32,6 +32,25 @@ export class UsersService {
     } else {
       localStorage.setItem('token', value);
     }
+  }
+
+    //vyrabam lokalnu inst. premennu username
+    private get username() {
+      return localStorage.getItem('username')
+    }
+    private set username(value: string | null) {
+      if (value === null) {
+        localStorage.removeItem('username')
+      } else {
+        localStorage.setItem('username', value);
+      }
+    }
+
+  public loggedUser(): Observable<string | null>{
+    return new Observable(subscriber => {
+      this.loggedUserSubscriber = subscriber
+      this.loggedUserSubscriber.next(this.username)
+    })
   }
 
   //synchronne
@@ -61,6 +80,8 @@ export class UsersService {
     return this.http.post(this.url + 'login', auth, { responseType: 'text' }).pipe(
       map(token => {
         this.token = token
+        this.username = auth.name
+        this.loggedUserSubscriber?.next(auth.name)
         this.messageService.successMessage("user " + auth.name + "logged in  successfully ")
         return true
       }),
@@ -73,6 +94,15 @@ export class UsersService {
         return of(false)
       })
     )
+  }
+
+  public logout(): void{
+    let u=this.username
+    this.token = null
+    this.username = null
+    this.loggedUserSubscriber?.next(null)
+    this.http.get(this.url + 'logout/' + this.token).subscribe()
+    this.messageService.successMessage("user "+u+"logged out")
   }
 
 

@@ -40,6 +40,12 @@ export class UsersService {
     )
   }
 
+  public getExtendedUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.url + 'users/'+this.token).pipe(
+      map(jsonArray => jsonArray.map(jsonUser => User.clone(jsonUser)))
+    )
+  }
+
   public login(auth: Auth): Observable<boolean> {
     //vezme telo a vrati mi ho ako string
     return this.http.post(this.url + 'login', auth, { responseType: 'text' }).pipe(

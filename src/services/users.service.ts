@@ -19,10 +19,20 @@ export class UsersService {
     new User("EskelS", "-", 4)
   ]
 
-  private token = ''
+  constructor(private http: HttpClient,
+    private messageService: SnackbarService) { }
 
-  constructor(private http: HttpClient, 
-              private messageService: SnackbarService) { }
+  //vyrabam lokalnu inst. premennu token
+  private get token() {
+    return localStorage.getItem('token')
+  }
+  private set token(value: string | null) {
+    if (value === null) {
+      localStorage.removeItem('token')
+    } else {
+      localStorage.setItem('token', value);
+    }
+  }
 
   //synchronne
   public getLocalUsersSyn(): User[] {
@@ -41,7 +51,7 @@ export class UsersService {
   }
 
   public getExtendedUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + 'users/'+this.token).pipe(
+    return this.http.get<User[]>(this.url + 'users/' + this.token).pipe(
       map(jsonArray => jsonArray.map(jsonUser => User.clone(jsonUser)))
     )
   }
@@ -49,15 +59,15 @@ export class UsersService {
   public login(auth: Auth): Observable<boolean> {
     //vezme telo a vrati mi ho ako string
     return this.http.post(this.url + 'login', auth, { responseType: 'text' }).pipe(
-      map(token=>{
-        this.token=token
-        this.messageService.successMessage("user "+auth.name+"logged in  successfully ")
+      map(token => {
+        this.token = token
+        this.messageService.successMessage("user " + auth.name + "logged in  successfully ")
         return true
       }),
       catchError(error => {
-        if(error instanceof HttpErrorResponse){
-          if(error.status==0)  this.messageService.errorMessage("server uavailible")
-          if(error.status == 401) this.messageService.errorMessage("Incorrect password or username")          
+        if (error instanceof HttpErrorResponse) {
+          if (error.status == 0) this.messageService.errorMessage("server uavailible")
+          if (error.status == 401) this.messageService.errorMessage("Incorrect password or username")
         }
         //??????
         return of(false)

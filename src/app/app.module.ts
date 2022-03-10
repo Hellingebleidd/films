@@ -13,6 +13,7 @@ import { ExtendedUsersComponent } from './extended-users/extended-users.componen
 import { MaterialModule } from 'src/modules/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GroupsPipe } from '../pipes/groups.pipe';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GroupsPipe } from '../pipes/groups.pipe';
     P404Component,
     ExtendedUsersComponent,
     NavbarComponent,
-    GroupsPipe
+    GroupsPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/entities/user';
 import { UsersService } from 'src/services/users.service';
 
@@ -7,18 +10,29 @@ import { UsersService } from 'src/services/users.service';
   templateUrl: './extended-users.component.html',
   styleUrls: ['./extended-users.component.css']
 })
-export class ExtendedUsersComponent implements OnInit {
+export class ExtendedUsersComponent implements OnInit, AfterViewInit {
 
-  columnsToDisplay = ['id','name', 'email', 'active', 'lastLogin', 'groups', 'permissions']
-  users: User[] = []
+  columnsToDisplay = ['id', 'name', 'email', 'active', 'lastLogin', 'groups', 'permissions']
+  // users: User[] = []
+  usersDataSource = new MatTableDataSource<User>()
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined
+  @ViewChild(MatSort) sort : MatSort | undefined
 
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {
-    this.userService.getExtendedUsers().subscribe(u=>{
-      this.users=u
+    this.userService.getExtendedUsers().subscribe(u => {
+      // this.users=u
+      this.usersDataSource.data = u
       console.log(u)
     })
   }
-
+  ngAfterViewInit(): void {
+    if (this.paginator && this.sort) {
+      this.usersDataSource.paginator = this.paginator
+      this.usersDataSource.sort=this.sort
+    }
+  }
 }
+
+

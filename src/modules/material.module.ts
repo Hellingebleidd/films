@@ -7,6 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+
+
 
 
 
@@ -18,7 +22,9 @@ const modules = [
   MatIconModule,
   MatCardModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatPaginatorModule,
+  MatSortModule
 ]
 
 @NgModule({

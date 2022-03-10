@@ -12,7 +12,7 @@ export class User{
     ){}
 
     public static clone(user: User): User{
-        return new User(user.name, user.email, user.id, user.lastLogin, user.password, user.active, user.groups.map(g => Group.clone(g)))
+        return new User(user.name, user.email, user.id, user.lastLogin, user.password, user.active, user.groups?.map(g => Group.clone(g)))
     }
 
     public toStr(){

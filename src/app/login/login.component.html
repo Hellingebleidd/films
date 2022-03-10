@@ -1,6 +1,6 @@
 <!-- <p>aktualny auth: {{getAuth()}}</p> -->
 
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" #formModel="ngForm">
     <mat-card class="login-card">
         <mat-card-header>
             <mat-card-title>Login page</mat-card-title>
@@ -10,22 +10,29 @@
         <mat-card-content>
             <mat-form-field appearance="fill">
                 <mat-label>Enter your username</mat-label>
-                <input matInput [(ngModel)]="auth.name" name="name">
+                <input matInput [(ngModel)]="auth.name" name="name" required minlength="3">
                 <mat-hint>Enter your username</mat-hint>
+                <mat-error>username must be at least 3 characters long</mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="passwd">
+                <input matInput required minlength="3" [type]="hide ? 'password' : 'text'" [(ngModel)]="auth.password" name="passwd">
                 <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
                 <mat-hint>Enter your password</mat-hint>
+                <mat-error>password must be at least 3 characters long</mat-error>
             </mat-form-field>
         </mat-card-content>
 
         <mat-card-actions>
-            <button mat-raised-button color="primary" type="submit">Log In</button>
+            <button 
+                mat-raised-button 
+                color="primary" 
+                type="submit" 
+                [disabled]="formModel.form.invalid"
+            >Log In</button>
         </mat-card-actions>
     </mat-card>
 

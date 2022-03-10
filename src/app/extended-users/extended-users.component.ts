@@ -16,8 +16,8 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
   // users: User[] = []
   usersDataSource = new MatTableDataSource<User>()
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
-  @ViewChild(MatSort) sort : MatSort | undefined
-
+  @ViewChild(MatSort) sort: MatSort | undefined
+  // filter = ""
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {
@@ -27,11 +27,35 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
       console.log(u)
     })
   }
+
   ngAfterViewInit(): void {
     if (this.paginator && this.sort) {
       this.usersDataSource.paginator = this.paginator
-      this.usersDataSource.sort=this.sort
+      this.usersDataSource.sort = this.sort
     }
+    this.usersDataSource.filterPredicate = (user: User, filter: string): boolean => {
+      if (user.name.toLowerCase().includes(filter)) return true
+      if (user.email.toLowerCase().includes(filter)) return true
+      if (user.groups.some(g => {
+        if (g.name.toLowerCase().includes(filter)) return true
+        return g.permissions.some(p => p.toLowerCase().includes(filter))
+      })) return true
+      return false
+    }
+    this.usersDataSource.sortingDataAccessor = (user: User, sortHeaderId: string) => {
+      switch (sortHeaderId) {
+        case 'groups':
+          return user.groups.map(g => g.name).join(", ")
+        case 'permissions':
+          return user.groups.flatMap(g => g.permissions).join(", ")
+        default:
+          return user[sortHeaderId as keyof User]?.toString() || ''
+      }
+    }
+  }
+
+  filter(event: any) {
+    this.usersDataSource.filter = event.target.value.toLowerCase()
   }
 }
 

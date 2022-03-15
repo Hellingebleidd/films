@@ -1,5 +1,5 @@
 
-<form (ngSubmit)="onSubmit()" #formModel="ngForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
     <mat-card class="login-card">
         <mat-card-header>
             <mat-card-title>Register</mat-card-title>
@@ -8,19 +8,22 @@
         <mat-card-content>
             <mat-form-field appearance="fill">
                 <mat-label>Enter your username</mat-label>
-                <input matInput type="text" >
-                <!-- <mat-hint>Enter your username</mat-hint> -->
+                <input matInput type="text" formControlName="name" >
+                <mat-error *ngIf="name.errors && name.errors['required']">Username is required</mat-error>
+                <mat-error *ngIf="name.errors && name.errors['minlength']">Username must be min {{name.errors['minlength']['requiredLength']}} characters long</mat-error>
+               <!-- <mat-hint>Enter your username</mat-hint> -->
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Enter your email</mat-label>
-                <input matInput type="email">
+                <input matInput type="email" formControlName="email">
+                <mat-error *ngIf="email.errors && email.errors['required']">email is required</mat-error>
                 <!-- <mat-hint>Enter your email</mat-hint> -->
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
                 <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -29,7 +32,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Enter password again</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password2">
                 <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -43,7 +46,7 @@
                 mat-raised-button 
                 color="primary" 
                 type="submit" 
-                [disabled]="formModel.form.invalid"
+                [disabled]="registerForm.invalid"
             >Register</button>
         </mat-card-actions>
     </mat-card>

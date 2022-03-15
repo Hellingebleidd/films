@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { map, Observable } from 'rxjs';
+import { User } from 'src/entities/user';
+import { UsersService } from 'src/services/users.service';
 import * as zxcvbn from 'zxcvbn';
 
 @Component({
@@ -20,12 +23,17 @@ export class RegisterComponent implements OnInit {
   }
 
   registerForm = new FormGroup({
-    name: new FormControl('pstruhanka', [Validators.required, Validators.minLength(4)]),
-    email: new FormControl('', [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$")]),
+    name: new FormControl('pstruhanka', 
+                          [Validators.required, Validators.minLength(4)], 
+                          this.serverConflictValidator('name')),
+    email: new FormControl('', 
+                          [Validators.required, Validators.email, Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]{2,}$")],
+                          this.serverConflictValidator('email')),
     password: new FormControl('', this.passwordValidator),
     password2: new FormControl(''),
   }, this.passwordMatchValidator)
-  constructor() { }
+
+  constructor(private usersService: UsersService) { }
 
   ngOnInit(): void {
   }
@@ -58,6 +66,20 @@ export class RegisterComponent implements OnInit {
     const err = {differentPasswd: "Passwords are not same"}
     pass2?.setErrors(err)
     return err
+  }
+
+  //asynchronny validator
+  serverConflictValidator(field: string): AsyncValidatorFn{
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const name = field === "name" ? control.value : ''
+      const email = field === "email" ? control.value : ''
+      const user  = new User(name, email)
+      return this.usersService.userConflicts(user).pipe(
+        map(conflictsArray => conflictsArray.includes(field) ? {
+          conflict: 'already exists'
+        } : null)
+      )
+    }
   }
 
   onSubmit(){

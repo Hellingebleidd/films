@@ -108,6 +108,12 @@ export class UsersService {
     this.messageService.successMessage("user " + u + " logged out")
   }
 
+  public userConflicts(user: User): Observable<string[]>{
+    return this.http.post<string[]>(this.url + 'user-conflicts', user)
+    .pipe(catchError(e => this.processHttpError(e)))
+  }
+
+
   //univerzalny chatcher pri chybe http spojenia
   private processHttpError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {

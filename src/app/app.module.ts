@@ -14,6 +14,7 @@ import { MaterialModule } from 'src/modules/material.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GroupsPipe } from '../pipes/groups.pipe';
 import { RegisterComponent } from './register/register.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RegisterComponent } from './register/register.component';
     ExtendedUsersComponent,
     NavbarComponent,
     GroupsPipe,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from 'src/entities/user';
+import { DialogService } from 'src/services/dialog.service';
 import { UsersService } from 'src/services/users.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
   @ViewChild(MatSort) sort: MatSort | undefined
   // filter = ""
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.userService.getExtendedUsers().subscribe(u => {
@@ -59,13 +60,21 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
   }
 
   deleteUser(user: User) {
-    if (user.id) {
-      this.userService.deleteUser(user.id).subscribe(()=>{
-        this.usersDataSource.data = this.usersDataSource.data.filter(
-          u => u.id !== user.id 
-        )
+    // if (user.id) {
+      this.dialogService.confirm("User Delete", "are you sure you want to delete user "+ user.name+" ?")
+      .subscribe(result => {
+        if(result && user.id){
+          this.userService.deleteUser(user.id).subscribe(()=>{
+            this.usersDataSource.data = this.usersDataSource.data.filter(
+              u => u.id !== user.id 
+            )
+          })
+        }
       })
-    }
+
+
+     
+    // }
   }
 }
 

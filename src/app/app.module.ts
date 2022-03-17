@@ -16,6 +16,7 @@ import { GroupsPipe } from '../pipes/groups.pipe';
 import { RegisterComponent } from './register/register.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserEditChildComponent } from './user-edit-child/user-edit-child.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     GroupsPipe,
     RegisterComponent,
     ConfirmDialogComponent,
-    UserEditComponent
+    UserEditComponent,
+    UserEditChildComponent
   ],
   imports: [
     BrowserModule,

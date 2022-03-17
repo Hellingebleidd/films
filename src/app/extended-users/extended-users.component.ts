@@ -12,7 +12,7 @@ import { UsersService } from 'src/services/users.service';
 })
 export class ExtendedUsersComponent implements OnInit, AfterViewInit {
 
-  columnsToDisplay = ['id', 'name', 'email', 'active', 'lastLogin', 'groups', 'permissions']
+  columnsToDisplay = ['id', 'name', 'email', 'active', 'lastLogin', 'groups', 'permissions', 'actions']
   // users: User[] = []
   usersDataSource = new MatTableDataSource<User>()
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
@@ -56,6 +56,16 @@ export class ExtendedUsersComponent implements OnInit, AfterViewInit {
 
   filter(event: any) {
     this.usersDataSource.filter = event.target.value.toLowerCase()
+  }
+
+  deleteUser(user: User) {
+    if (user.id) {
+      this.userService.deleteUser(user.id).subscribe(()=>{
+        this.usersDataSource.data = this.usersDataSource.data.filter(
+          u => u.id !== user.id 
+        )
+      })
+    }
   }
 }
 

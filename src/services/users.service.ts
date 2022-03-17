@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, EMPTY, map, Observable, of, Subscriber } from 'rxjs';
+import { catchError, EMPTY, map, Observable, of, Subscriber, tap } from 'rxjs';
 import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user';
 import { SnackbarService } from './snackbar.service';
@@ -75,6 +75,15 @@ export class UsersService {
   public getExtendedUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url + 'users/' + this.token).pipe(
       map(jsonArray => jsonArray.map(jsonUser => User.clone(jsonUser))),
+      catchError(error => this.processHttpError(error))
+    )
+  }
+
+  public deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(this.url + 'user/'+ userId+ '/' + this.token).pipe(
+      tap(()=>{
+        this.messageService.successMessage('user successfully deleted')
+      }),
       catchError(error => this.processHttpError(error))
     )
   }

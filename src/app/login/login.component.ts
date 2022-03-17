@@ -10,7 +10,7 @@ import { UsersService } from 'src/services/users.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  auth = new Auth("Lucia", "lucia")
+  auth = new Auth("Peter", "upjs")
   hide = true
   errorMessage = ''
 

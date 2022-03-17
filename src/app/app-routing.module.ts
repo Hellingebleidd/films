@@ -4,11 +4,13 @@ import { ExtendedUsersComponent } from './extended-users/extended-users.componen
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
 import { RegisterComponent } from './register/register.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   { path: 'users', component: UsersComponent },
   { path: 'extended-users', component: ExtendedUsersComponent },
+  { path: 'users/edit/:id', component: UserEditComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: "", redirectTo: '/login', pathMatch: 'full' },

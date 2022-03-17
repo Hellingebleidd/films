@@ -79,6 +79,13 @@ export class UsersService {
     )
   }
 
+  public getUserById(id: number): Observable<User> {
+    return this.http.get<User>(this.url + 'user/'+id+'/' + this.token).pipe(
+      map(jsonUser => User.clone(jsonUser)),
+      catchError(error => this.processHttpError(error))
+    )
+  }
+
   public deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(this.url + 'user/'+ userId+ '/' + this.token).pipe(
       tap(()=>{
@@ -87,6 +94,8 @@ export class UsersService {
       catchError(error => this.processHttpError(error))
     )
   }
+
+
 
   public login(auth: Auth): Observable<boolean> {
     //vezme telo a vrati mi ho ako string

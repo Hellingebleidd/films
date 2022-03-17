@@ -15,6 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { GroupsPipe } from '../pipes/groups.pipe';
 import { RegisterComponent } from './register/register.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     NavbarComponent,
     GroupsPipe,
     RegisterComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

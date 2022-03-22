@@ -1,3 +1,8 @@
+.formular{
+    /* margin-bottom: 50px; */
+    padding-bottom: 100px;
+}
+
 .login-card{
     width: 30%; 
     /* 500px */
@@ -8,4 +13,9 @@
 .mat-form-field{
     display: block;
     margin-bottom: 15px;
+}
+
+.mat-checkbox{
+    display: block;
+    margin-top: 5px;
 }

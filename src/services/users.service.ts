@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY, map, Observable, of, Subscriber, tap } from 'rxjs';
 import { Auth } from 'src/entities/auth';
+import { Group } from 'src/entities/group';
 import { User } from 'src/entities/user';
 import { SnackbarService } from './snackbar.service';
 
@@ -21,8 +22,8 @@ export class UsersService {
   ]
 
   constructor(private http: HttpClient,
-              private messageService: SnackbarService,
-              private router: Router) { }
+    private messageService: SnackbarService,
+    private router: Router) { }
 
   //vyrabam lokalnu inst. premennu token
   private get token() {
@@ -80,22 +81,43 @@ export class UsersService {
   }
 
   public getUserById(id: number): Observable<User> {
-    return this.http.get<User>(this.url + 'user/'+id+'/' + this.token).pipe(
+    return this.http.get<User>(this.url + 'user/' + id + '/' + this.token).pipe(
       map(jsonUser => User.clone(jsonUser)),
       catchError(error => this.processHttpError(error))
     )
   }
 
   public deleteUser(userId: number): Observable<void> {
-    return this.http.delete<void>(this.url + 'user/'+ userId+ '/' + this.token).pipe(
-      tap(()=>{
+    return this.http.delete<void>(this.url + 'user/' + userId + '/' + this.token).pipe(
+      tap(() => {
         this.messageService.successMessage('user successfully deleted')
       }),
       catchError(error => this.processHttpError(error))
     )
   }
 
+  public getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(this.url + 'groups').pipe(
+      map(jsonArray => jsonArray.map(jsonGroup => Group.clone(jsonGroup))),
+      catchError(error => this.processHttpError(error))
+    )
+  }
 
+  public saveUser(user: User): Observable<User> {
+    return this.http.post<User>(this.url + "users/" + this.token, user).pipe(
+      map(jsonUser => User.clone(jsonUser)),
+      tap(user => this.messageService.successMessage("user " + user.name + " saved successfully ")),
+      catchError(error => this.processHttpError(error))
+    )
+  }
+
+  public registerUser(user: User): Observable<User> {
+    return this.http.post<User>(this.url + "register", user).pipe(
+      map(jsonUser => User.clone(jsonUser)),
+      tap(user => this.messageService.successMessage("user " + user.name + " saved successfully ")),
+      catchError(error => this.processHttpError(error))
+    )
+  }
 
   public login(auth: Auth): Observable<boolean> {
     //vezme telo a vrati mi ho ako string
@@ -109,9 +131,9 @@ export class UsersService {
       }),
       catchError(error => {
         if (error instanceof HttpErrorResponse && error.status == 401) {
-            this.messageService.errorMessage("Incorrect password or username")
-            return of(false)
-          }
+          this.messageService.errorMessage("Incorrect password or username")
+          return of(false)
+        }
         return this.processHttpError(error)
       })
     )
@@ -126,9 +148,9 @@ export class UsersService {
     this.messageService.successMessage("user " + u + " logged out")
   }
 
-  public userConflicts(user: User): Observable<string[]>{
+  public userConflicts(user: User): Observable<string[]> {
     return this.http.post<string[]>(this.url + 'user-conflicts', user)
-    .pipe(catchError(e => this.processHttpError(e)))
+      .pipe(catchError(e => this.processHttpError(e)))
   }
 
 

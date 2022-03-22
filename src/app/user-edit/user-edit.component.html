@@ -3,4 +3,4 @@
 <a mat-button routerLink="../{{userid-1}}">previous</a>
 <a mat-button routerLink="../{{userid+1}}">next</a>
 <hr color="disabled"/>
-<app-user-edit-child></app-user-edit-child>
+<app-user-edit-child [user]="user" (saved)="userSaved($event)"></app-user-edit-child>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, mergeMap } from 'rxjs';
 import { User } from 'src/entities/user';
 import { UsersService } from 'src/services/users.service';
@@ -14,7 +14,7 @@ export class UserEditComponent implements OnInit {
   userid = 0
   user: User = new User('', '')
 
-  constructor(private route: ActivatedRoute, private userService: UsersService) { }
+  constructor(private route: ActivatedRoute, private userService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
     //snapshot je pri vytvarani
@@ -27,6 +27,11 @@ export class UserEditComponent implements OnInit {
       }),
       mergeMap(id => this.userService.getUserById(id))
     ).subscribe(u => this.user = u)
+  }
+
+  userSaved(user: User){
+    this.user = user;
+    this.router.navigateByUrl("/extended-users")
   }
 
 }

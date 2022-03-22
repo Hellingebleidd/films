@@ -1,8 +1,8 @@
 
-<form (ngSubmit)="onSubmit()" [formGroup]="editForm">
+<form (ngSubmit)="onSubmit()" [formGroup]="editForm" class="formular">
     <mat-card class="login-card">
         <mat-card-header>
-            <mat-card-title>EDIT USER</mat-card-title>
+            <mat-card-title>{{title}}</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
@@ -35,7 +35,13 @@
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
-           
+            <mat-slide-toggle formControlName="active">aktivny</mat-slide-toggle>
+            <br /> <br/>
+            <div formArrayName="groups">
+                <mat-checkbox *ngFor="let g of groups.controls; let i = index" [formControlName]="i">
+                    {{allGroups[i].name}}
+                </mat-checkbox>
+            </div>
         </mat-card-content>
 
         <mat-card-actions>

@@ -114,7 +114,7 @@ export class UsersService {
   public registerUser(user: User): Observable<User> {
     return this.http.post<User>(this.url + "register", user).pipe(
       map(jsonUser => User.clone(jsonUser)),
-      tap(user => this.messageService.successMessage("user " + user.name + " saved successfully ")),
+      tap(user => this.messageService.successMessage("registration successful")),
       catchError(error => this.processHttpError(error))
     )
   }

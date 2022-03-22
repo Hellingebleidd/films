@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { User } from 'src/entities/user';
 import { UsersService } from 'src/services/users.service';
@@ -33,7 +34,7 @@ export class RegisterComponent implements OnInit {
     password2: new FormControl(''),
   }, this.passwordMatchValidator)
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -83,6 +84,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(){
-    
+    const userToSave = new User(
+      this.name.value,
+      this.email.value,
+      undefined,
+      undefined,
+      this.password.value,
+      true
+    )
+    this.usersService.registerUser(userToSave).subscribe(saved =>{
+      this.router.navigateByUrl("/login")
+    })
   }
 }

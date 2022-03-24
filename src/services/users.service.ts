@@ -7,12 +7,15 @@ import { Group } from 'src/entities/group';
 import { User } from 'src/entities/user';
 import { SnackbarService } from './snackbar.service';
 
+export const DEFAULT_REDIRECT_URL = '/extended-users';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
   private url = 'http://localhost:8080/'
   private loggedUserSubscriber: Subscriber<string | null> | undefined
+  public redirectAfterLogin = DEFAULT_REDIRECT_URL
   //lokalni userovia
   private users = [
     new User("ZuzankaS", "zuzanka@z.sk", 1, new Date("2022-02-24"), 'heslo'),
@@ -47,6 +50,10 @@ export class UsersService {
     } else {
       localStorage.setItem('username', value);
     }
+  }
+
+  public isLoggedIn(): boolean {
+    return !!this.token
   }
 
   public loggedUser(): Observable<string | null> {

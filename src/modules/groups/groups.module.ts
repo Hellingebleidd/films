@@ -6,13 +6,15 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 import { GroupMenuComponent } from './group-menu/group-menu.component';
 import { GroupAddComponent } from './group-add/group-add.component';
 import { MaterialModule } from '../material.module';
+import { GroupDetailComponent } from './group-detail/group-detail.component';
 
 
 @NgModule({
   declarations: [
     GroupsListComponent,
     GroupMenuComponent,
-    GroupAddComponent
+    GroupAddComponent,
+    GroupDetailComponent
   ],
   imports: [
     CommonModule,

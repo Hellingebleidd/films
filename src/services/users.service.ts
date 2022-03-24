@@ -110,6 +110,13 @@ export class UsersService {
     )
   }
 
+  public getGroup(id: number): Observable<Group> {
+    return this.http.get<Group>(this.url + 'group/'+id).pipe(
+      map(jsonGroup => Group.clone(jsonGroup)),
+      catchError(error => this.processHttpError(error))
+    )
+  }
+
   public saveUser(user: User): Observable<User> {
     return this.http.post<User>(this.url + "users/" + this.token, user).pipe(
       map(jsonUser => User.clone(jsonUser)),

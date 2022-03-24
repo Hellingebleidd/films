@@ -1,1 +1,3 @@
-<p>groups-list works!</p>
+<ul>
+    <li *ngFor="let group of groups" routerLink="/groups/detail/{{group.id}}">{{group.name}}</li>
+</ul>

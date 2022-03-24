@@ -3,6 +3,8 @@ import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationEr
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { User } from 'src/entities/user';
+import { CanDeactivateComponent } from 'src/guards/can-deactivate.guard';
+import { DialogService } from 'src/services/dialog.service';
 import { UsersService } from 'src/services/users.service';
 import * as zxcvbn from 'zxcvbn';
 
@@ -11,7 +13,7 @@ import * as zxcvbn from 'zxcvbn';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, CanDeactivateComponent {
   hide = true
 
   passwordMessage = ''
@@ -34,7 +36,7 @@ export class RegisterComponent implements OnInit {
     password2: new FormControl(''),
   }, this.passwordMatchValidator)
 
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(private usersService: UsersService, private router: Router, private dialogService: DialogService) { }
 
   ngOnInit(): void {
   }
@@ -95,5 +97,12 @@ export class RegisterComponent implements OnInit {
     this.usersService.registerUser(userToSave).subscribe(saved =>{
       this.router.navigateByUrl("/login")
     })
+  }
+
+  canDeactivate(): boolean | Observable<boolean>{
+    if(this.name.dirty || this.email.dirty){
+      return this.dialogService.confirm('registration not finnished', 'do you want to leave the page?')
+    }
+    return true
   }
 }

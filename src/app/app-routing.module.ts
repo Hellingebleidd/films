@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { CanDeactivateGuard } from 'src/guards/can-deactivate.guard';
 import { ExtendedUsersComponent } from './extended-users/extended-users.component';
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
@@ -17,14 +18,18 @@ const routes: Routes = [
   },
   {
     path: 'users/edit/:id', component: UserEditComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    canDeactivate: [CanDeactivateGuard]
   },
   {
     path: 'users/add', component: UserAddComponent,
     canActivate: [AuthGuard]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  {
+    path: 'register', component: RegisterComponent,
+    canDeactivate: [CanDeactivateGuard]
+  },
   { path: "", redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: P404Component }
 ]

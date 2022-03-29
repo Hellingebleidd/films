@@ -40,6 +40,21 @@ export class FilmsService {
     if (indexFrom || indexTo || search || orderBy || descending) {
       httpOptions = { ...httpOptions, params: new HttpParams() }
     }
-    return this.http.get<FilmsResponse>(this.url, this.getHeader())
+    if (indexFrom && httpOptions?.params)
+      httpOptions.params = httpOptions?.params?.set('indexFrom', indexFrom)
+
+    if (indexTo && httpOptions?.params)
+      httpOptions.params = httpOptions?.params?.set('indexTo', indexTo)
+
+    if (search && httpOptions?.params)
+      httpOptions.params = httpOptions?.params?.set('search', search)
+
+    if (orderBy && httpOptions?.params)
+      httpOptions.params = httpOptions?.params?.set('orderBy', orderBy)
+
+    if (descending && httpOptions?.params)
+      httpOptions.params = httpOptions?.params?.set('descending', descending)
+
+    return this.http.get<FilmsResponse>(this.url, httpOptions)
   }
 }

@@ -5,6 +5,7 @@ import { catchError, EMPTY, map, Observable, of, Subscriber, tap } from 'rxjs';
 import { Auth } from 'src/entities/auth';
 import { Group } from 'src/entities/group';
 import { User } from 'src/entities/user';
+import { environment } from 'src/environments/environment';
 import { SnackbarService } from './snackbar.service';
 
 export const DEFAULT_REDIRECT_URL = '/extended-users';
@@ -13,7 +14,7 @@ export const DEFAULT_REDIRECT_URL = '/extended-users';
   providedIn: 'root'
 })
 export class UsersService {
-  private url = 'http://localhost:8080/'
+  private url = environment.restServer
   private loggedUserSubscriber: Subscriber<string | null> | undefined
   public redirectAfterLogin = DEFAULT_REDIRECT_URL
   //lokalni userovia
@@ -29,7 +30,7 @@ export class UsersService {
     private router: Router) { }
 
   //vyrabam lokalnu inst. premennu token
-  private get token() {
+  public get token() {
     return localStorage.getItem('token')
   }
   private set token(value: string | null) {

@@ -1,6 +1,6 @@
 import { Film } from "./film";
 
-export class FulmsResponse{
+export class FilmsResponse{
     constructor(
         public items: Film[],
         public totalCount: number

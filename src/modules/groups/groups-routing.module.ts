@@ -8,7 +8,7 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 
 const routes: Routes = [
   {
-    path: "groups", component: GroupMenuComponent,
+    path: '', component: GroupMenuComponent,
     children: [
       { path: 'list', component: GroupsListComponent },
       { path: 'add', component: GroupAddComponent },

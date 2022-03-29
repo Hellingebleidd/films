@@ -11,6 +11,10 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
+  {
+    path: 'groups',
+    loadChildren: () => import('../modules/groups/groups.module').then(mod => mod.GroupsModule)
+  },
   { path: 'users', component: UsersComponent },
   {
     path: 'extended-users', component: ExtendedUsersComponent,

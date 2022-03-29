@@ -13,7 +13,8 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
   {
     path: 'groups',
-    loadChildren: () => import('../modules/groups/groups.module').then(mod => mod.GroupsModule)
+    loadChildren: () => import('../modules/groups/groups.module').then(mod => mod.GroupsModule),
+    canLoad: [AuthGuard]
   },
   { path: 'users', component: UsersComponent },
   {

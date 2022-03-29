@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CanDeactivateGuard } from 'src/guards/can-deactivate.guard';
+import { SelectingPreloadingService } from 'src/services/selecting-preloading.service';
 import { ExtendedUsersComponent } from './extended-users/extended-users.component';
 import { LoginComponent } from './login/login.component';
 import { P404Component } from './p404/p404.component';
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'groups',
     loadChildren: () => import('../modules/groups/groups.module').then(mod => mod.GroupsModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'films',
+    loadChildren: () => import('../modules/films/films.module').then(mod => mod.FilmsModule),
+    data: { preload: false }
   },
   { path: 'users', component: UsersComponent },
   {
@@ -41,7 +47,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: SelectingPreloadingService
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

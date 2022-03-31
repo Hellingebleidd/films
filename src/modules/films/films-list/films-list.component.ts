@@ -55,6 +55,8 @@ class FilmsDataSource implements DataSource<Film>{
   indexFrom: number = 0
   indexTo: number = 10
   filterString: string | undefined
+  sortColumn: string | undefined
+  descending: boolean | undefined
 
   constructor(private filmsService: FilmsService) { }
 
@@ -82,18 +84,31 @@ class FilmsDataSource implements DataSource<Film>{
       tap(pageEvent => {
         this.indexFrom = pageEvent.pageIndex * pageEvent.pageSize
         this.indexTo = Math.min(this.indexFrom + pageEvent.pageSize, pageEvent.length)
-        // this.indexTo = this.indexTo > pageEvent.length ? pageEvent.length : this.indexTo
-
       })
     ))
-    this.futureObservables.emit(sort.sortChange)
+    this.futureObservables.emit(sort.sortChange.pipe(
+      tap(sortEvent => {
+        if (sortEvent.direction) {
+          this.sortColumn = sortEvent.active
+          this.descending = sortEvent.direction === 'desc'
+          if (sortEvent.active === 'afi1998') 
+            this.sortColumn = 'poradieVRebricku.AFI 1998'
+            if (sortEvent.active === 'afi2007') 
+            this.sortColumn = 'poradieVRebricku.AFI 2007'
+        } else {
+          this.sortColumn = undefined
+          this.descending = undefined
+        }
+        this.goToFirstPage()
+      })
+    ))
   }
 
   connect(collectionViewer: CollectionViewer): Observable<readonly Film[]> {
     return this.futureObservables.pipe(
       mergeAll(),
       tap(e => console.log("event to get files from server: ", e)),
-      mergeMap(e => this.filmsService.getFilms(this.indexFrom, this.indexTo, this.filterString)),
+      mergeMap(e => this.filmsService.getFilms(this.indexFrom, this.indexTo, this.filterString, this.sortColumn, this.descending)),
       map((resp: FilmsResponse) => {
         if (this.paginator)
           this.paginator.length = resp.totalCount

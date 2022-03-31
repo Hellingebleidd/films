@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { FilmsResponse } from 'src/entities/films-response';
 import { UsersService } from 'src/services/users.service';
 import { environment } from '../../environments/environment';
@@ -55,6 +55,8 @@ export class FilmsService {
     if (descending && httpOptions?.params)
       httpOptions.params = httpOptions?.params?.set('descending', descending)
 
-    return this.http.get<FilmsResponse>(this.url, httpOptions)
+    return this.http.get<FilmsResponse>(this.url, httpOptions).pipe(
+      catchError(er=>this.usersService.processHttpError(er))
+    )
   }
 }

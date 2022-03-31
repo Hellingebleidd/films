@@ -170,7 +170,7 @@ export class UsersService {
 
 
   //univerzalny chatcher pri chybe http spojenia
-  private processHttpError(error: any): Observable<never> {
+  public processHttpError(error: any): Observable<never> {
     if (error instanceof HttpErrorResponse) {
       if (error.status == 0) {
         this.messageService.errorMessage("server uavailible")

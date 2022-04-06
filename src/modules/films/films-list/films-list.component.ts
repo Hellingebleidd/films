@@ -7,15 +7,26 @@ import { Film } from 'src/entities/film';
 import { FilmsResponse } from 'src/entities/films-response';
 import { FilmsService } from '../films.service';
 
+import {animate, state, style, transition, trigger} from '@angular/animations';
+
 @Component({
   selector: 'app-films-list',
   templateUrl: './films-list.component.html',
-  styleUrls: ['./films-list.component.css']
+  styleUrls: ['./films-list.component.css'],
+
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class FilmsListComponent implements OnInit, AfterViewInit {
 
   filmsDataSource: FilmsDataSource
   columnsToDisplay = ['id', 'nazov', 'rok']
+  expandedElement: Film | null |undefined
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
   @ViewChild(MatSort) sort: MatSort | undefined

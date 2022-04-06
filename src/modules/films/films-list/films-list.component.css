@@ -37,11 +37,11 @@ tr.example-detail-row {
     height: 104px;
   }
   
-  .example-element-symbol {
+  /* .example-element-symbol {
     font-weight: bold;
     font-size: 40px;
     line-height: normal;
-  }
+  } */
   
   .example-element-description {
     padding: 16px;

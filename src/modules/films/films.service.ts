@@ -11,6 +11,8 @@ import { environment } from '../../environments/environment';
 export class FilmsService {
 
   url = environment.restServer + 'films/'
+  // omdbUrl = environment.omdbServer
+  // apiKey = '&apikey=8c8d8a8d'
 
   constructor(private http: HttpClient, private usersService: UsersService) { }
 
@@ -29,6 +31,10 @@ export class FilmsService {
       }
       : undefined
   }
+
+  // getDetail(){
+  //   return this.http.get(this.omdbUrl+)
+  // }
 
   getFilms(indexFrom?: number,
     indexTo?: number,

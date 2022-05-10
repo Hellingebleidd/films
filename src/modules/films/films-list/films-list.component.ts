@@ -40,10 +40,9 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
     if (this.filmsService.token) {
       this.columnsToDisplay = ['id', 'nazov', 'slovenskyNazov', 'rok', 'afi1998', 'afi2007']
     }
-    // this.filmsService.getFilms().subscribe(resp => {
-    //   this.films = resp.items
-    //   console.log('FILMY: ', resp)
-    // })
+    this.filmsService.getDetail().subscribe(resp => 
+      console.log('FILMY: ', resp)
+    )
   }
 
   ngAfterViewInit(): void {

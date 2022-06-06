@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FilmsListComponent } from './films-list/films-list.component';
 import { FilmsRoutingModule } from './films-routing.module';
 import { MaterialModule } from '../material.module';
+import { FilmDetailComponent } from './film-detail/film-detail.component';
 
 
 
 @NgModule({
   declarations: [
-    FilmsListComponent
+    FilmsListComponent,
+    FilmDetailComponent
   ],
   imports: [
     CommonModule,

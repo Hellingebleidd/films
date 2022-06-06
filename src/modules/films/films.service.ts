@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import { Detail } from 'src/entities/detail';
 import { FilmsResponse } from 'src/entities/films-response';
 import { UsersService } from 'src/services/users.service';
 import { environment } from '../../environments/environment';
@@ -11,13 +12,18 @@ import { environment } from '../../environments/environment';
 export class FilmsService {
 
   url = environment.restServer + 'films/'
-  // omdbUrl = environment.omdbServer
-  // apiKey = '&apikey=8c8d8a8d'
+  omdbUrl = environment.omdbServer +'?apikey=8c8d8a8d&i='
+
 
   constructor(private http: HttpClient, private usersService: UsersService) { }
 
   get token(): string | null {
     return this.usersService.token
+  }
+
+  get imdbID(): string{
+    
+    return 'tt0111742'
   }
 
   getHeader(): {
@@ -32,9 +38,9 @@ export class FilmsService {
       : undefined
   }
 
-  // getDetail(){
-  //   return this.http.get(this.omdbUrl+)
-  // }
+  getDetail(){
+    return this.http.get<Detail>(this.omdbUrl+'tt0111742')
+  }
 
   getFilms(indexFrom?: number,
     indexTo?: number,

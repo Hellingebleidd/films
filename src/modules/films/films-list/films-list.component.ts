@@ -7,7 +7,7 @@ import { Film } from 'src/entities/film';
 import { FilmsResponse } from 'src/entities/films-response';
 import { FilmsService } from '../films.service';
 
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-films-list',
@@ -16,8 +16,8 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -26,11 +26,14 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
 
   filmsDataSource: FilmsDataSource
   columnsToDisplay = ['id', 'nazov', 'rok']
-  expandedElement: Film | null |undefined
+  expandedElement: Film | null | undefined
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
   @ViewChild(MatSort) sort: MatSort | undefined
   filter$ = new Subject<string>() //to je prud
+
+  selectedFilm: Film | undefined = undefined
+  selectedImdbID: string | undefined = undefined
 
   constructor(private filmsService: FilmsService) {
     this.filmsDataSource = new FilmsDataSource(filmsService)
@@ -55,6 +58,13 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
     const filterString = event.target.value
     //TODO spracovat
     this.filter$.next(filterString)
+  }
+
+  selectFilm(film: Film) {
+    this.selectedFilm = film
+    this.selectedImdbID = film.imdbID
+    console.log(this.selectedFilm)
+    console.log(this.selectedImdbID)
   }
 
 }
@@ -102,9 +112,9 @@ class FilmsDataSource implements DataSource<Film>{
         if (sortEvent.direction) {
           this.sortColumn = sortEvent.active
           this.descending = sortEvent.direction === 'desc'
-          if (sortEvent.active === 'afi1998') 
+          if (sortEvent.active === 'afi1998')
             this.sortColumn = 'poradieVRebricku.AFI 1998'
-            if (sortEvent.active === 'afi2007') 
+          if (sortEvent.active === 'afi2007')
             this.sortColumn = 'poradieVRebricku.AFI 2007'
         } else {
           this.sortColumn = undefined

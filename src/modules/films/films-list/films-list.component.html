@@ -39,18 +39,18 @@
 
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let myRowData" [attr.colspan]="columnsToDisplay.length">
-                <div class="example-element-detail"
+                <div class="film-detail"
                     [@detailExpand]="myRowData == expandedElement ? 'expanded' : 'collapsed'">
                     <div *ngIf="selectedFilm">
-                        <img class="example-element-diagram" src={{movie.Poster}}>
-                        <div class="example-element-description">
-                            <strong>Title: </strong>{{movie.Title}}<br />
-                            <strong>Year: </strong> {{movie.Year}}<br />
-                            <strong>Runtime: </strong> {{movie.Runtime}}<br />
-                            <strong>Genre: </strong> {{movie.Genre}}<br />
-                            <strong>Director: </strong>{{movie.Director}}<br />
-                            <strong>Actors: </strong>{{movie.Actors}}<br />
-                            <strong>Plot: </strong>{{movie.Plot}}
+                        <img class="film-detail-poster" src={{movieDetail.Poster}}>
+                        <div class="film-detail-description">
+                            <!-- <strong>Title: </strong>{{movieDetail.Title}}<br /> -->
+                            <strong>Year: </strong> {{movieDetail.Year}}<br />
+                            <strong>Runtime: </strong> {{movieDetail.Runtime}}<br />
+                            <strong>Genre: </strong> {{movieDetail.Genre}}<br />
+                            <strong>Director: </strong>{{movieDetail.Director}}<br />
+                            <strong>Actors: </strong>{{movieDetail.Actors}}<br />
+                            <strong>Plot: </strong>{{movieDetail.Plot}}
                         </div>
                     </div>
                 </div>

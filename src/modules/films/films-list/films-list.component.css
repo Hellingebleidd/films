@@ -23,12 +23,12 @@ tr.example-detail-row {
     border-bottom-width: 0;
   }
   
-  .example-element-detail {
+  .film-detail {
     overflow: hidden;
     display: flex;
   }
   
-  .example-element-diagram {
+  .film-detail-poster {
     min-width: 80px;
     border: 2px solid black;
     padding: 8px;
@@ -38,18 +38,9 @@ tr.example-detail-row {
     float: left;
   }
   
-  /* .example-element-symbol {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: normal;
-  } */
-  
-  .example-element-description {
+  .film-detail-description {
     padding: 16px;
     float: left;
-    /* max-width: 70%; */
+    max-width: 70%;
   }
   
-  .example-element-description-attribution {
-    opacity: 0.5;
-  }

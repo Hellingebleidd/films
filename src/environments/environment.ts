@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   restServer: 'http://localhost:8080/',
-  omdbServer: 'http://www.omdbapi.com/?'
+  omdbServer: 'http://www.omdbapi.com/?apikey=8c8d8a8d&plot=full&i='
 };
 
 /*

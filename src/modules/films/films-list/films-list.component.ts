@@ -8,7 +8,6 @@ import { FilmsResponse } from 'src/entities/films-response';
 import { FilmsService } from '../films.service';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Detail } from 'src/entities/detail';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -29,7 +28,7 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
   filmsDataSource: FilmsDataSource
   columnsToDisplay = ['id', 'nazov', 'rok']
   expandedElement: Film | null | undefined
-  movie={
+  movieDetail={
     Title:'', 
     Year: '',
     Runtime: '',
@@ -47,7 +46,7 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
 
   selectedFilm: string | undefined = undefined
   // selectedImdbID: string | undefined = undefined
-  filmDetail: Detail | undefined = undefined
+
 
   constructor(private filmsService: FilmsService) {
     this.filmsDataSource = new FilmsDataSource(filmsService)
@@ -77,13 +76,9 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
   selectFilm(film: Film) {
     this.selectedFilm = film.imdbID
     //console.log(this.selectedFilm)
-    fetch(environment.omdbServer+'apikey=8c8d8a8d&i='+this.selectedFilm)
+    fetch(environment.omdbServer+this.selectedFilm)
     .then(resp => resp.json())
-    .then(r => this.movie=r)
-    //this.filmsService.getDetail(this.selectedFilm)
-
-
-    //console.log(this.selectedImdbID)
+    .then(r => this.movieDetail=r)
   }
 
 }

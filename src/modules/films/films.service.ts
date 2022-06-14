@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
-import { Detail } from 'src/entities/detail';
 import { FilmsResponse } from 'src/entities/films-response';
 import { UsersService } from 'src/services/users.service';
 import { environment } from '../../environments/environment';
@@ -50,13 +49,12 @@ export class FilmsService {
       : undefined
   }
 
-  //Observable<Detail>
-  getDetail(imdbID: string) {
-    this.imdb = imdbID
-    console.log( "response: ", this.http.get(this.omdbUrl+imdbID))
-    return this.http.get(this.omdbUrl+imdbID)
+  // getDetail(imdbID: string) {
+  //   this.imdb = imdbID
+  //   console.log( "response: ", this.http.get(this.omdbUrl+imdbID))
+  //   return this.http.get(this.omdbUrl+imdbID)
   
-  }
+  // }
 
   getFilms(indexFrom?: number,
     indexTo?: number,

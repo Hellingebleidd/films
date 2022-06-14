@@ -41,7 +41,13 @@
         <td mat-cell *matCellDef="let myRowData" [attr.colspan]="columnsToDisplay.length">
             <div class="example-element-detail"
                 [@detailExpand]="myRowData == expandedElement ? 'expanded' : 'collapsed'">
-                <app-film-detail></app-film-detail>
+                <div *ngIf="selectedFilm">
+                    <!-- <h2>imdb ID: {{myRowData.imdbID}}</h2> -->
+                    id filmu: {{selectedFilm}}
+                    <app-film-detail></app-film-detail>
+                </div>
+                
+
                 <!-- <div class="example-element-diagram">
                     plagat filmu
                 </div>

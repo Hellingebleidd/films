@@ -8,6 +8,7 @@ import { FilmsResponse } from 'src/entities/films-response';
 import { FilmsService } from '../films.service';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Detail } from 'src/entities/detail';
 
 @Component({
   selector: 'app-films-list',
@@ -28,12 +29,14 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
   columnsToDisplay = ['id', 'nazov', 'rok']
   expandedElement: Film | null | undefined
 
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
   @ViewChild(MatSort) sort: MatSort | undefined
   filter$ = new Subject<string>() //to je prud
 
-  selectedFilm: Film | undefined = undefined
-  selectedImdbID: string | undefined = undefined
+  selectedFilm: string | undefined = undefined
+  // selectedImdbID: string | undefined = undefined
+  filmDetail: Detail | undefined = undefined
 
   constructor(private filmsService: FilmsService) {
     this.filmsDataSource = new FilmsDataSource(filmsService)
@@ -61,10 +64,13 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
   }
 
   selectFilm(film: Film) {
-    this.selectedFilm = film
-    this.selectedImdbID = film.imdbID
+    this.selectedFilm = film.imdbID
     console.log(this.selectedFilm)
-    console.log(this.selectedImdbID)
+    
+    this.filmsService.getDetail(this.selectedFilm)
+
+
+    //console.log(this.selectedImdbID)
   }
 
 }

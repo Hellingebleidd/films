@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Detail } from 'src/entities/detail';
 import { FilmsService } from '../films.service';
 
 @Component({
@@ -8,12 +9,23 @@ import { FilmsService } from '../films.service';
 })
 export class FilmDetailComponent implements OnInit {
 
-  constructor(private filmservice: FilmsService) { }
+  imdb: string | null
+
+
+  constructor(private filmservice: FilmsService) {
+    this.imdb = this.filmservice.imdb
+
+  }
 
   ngOnInit(): void {
-    console.log(
-      this.filmservice.getDetail()
-    )
+    if (this.imdb) {
+      this.filmservice.getDetail(this.imdb)
+      // console.log("cely film?:", this.filmservice.getDetail(this.imdb))
+    }
+    console.log("detail component:", this.imdb)
+    
   }
+
+  
 
 }

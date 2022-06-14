@@ -21,10 +21,22 @@ export class FilmsService {
     return this.usersService.token
   }
 
-  get imdbID(): string{
-    
-    return 'tt0111742'
+  public get imdb(){
+    return localStorage.getItem('imdb')
   }
+
+  private set imdb(value: string | null){
+    if(value===null){
+      localStorage.removeItem('imdb')
+    }else{
+      localStorage.setItem('imdb', value)
+    }
+  }
+
+  // get imdbID(): string{
+    
+  //   return this.
+  // }
 
   getHeader(): {
     headers?: { "X-Auth-Token": string },
@@ -38,8 +50,11 @@ export class FilmsService {
       : undefined
   }
 
-  getDetail(){
-    return this.http.get<Detail>(this.omdbUrl+'tt0111742')
+  getDetail(imdbID: string): Observable<Detail>{
+    this.imdb = imdbID
+    console.log( "response: ", this.http.get<Detail>(this.omdbUrl+imdbID))
+    return this.http.get<Detail>(this.omdbUrl+imdbID)
+  
   }
 
   getFilms(indexFrom?: number,

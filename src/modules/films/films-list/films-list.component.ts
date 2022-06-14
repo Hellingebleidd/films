@@ -9,6 +9,7 @@ import { FilmsService } from '../films.service';
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Detail } from 'src/entities/detail';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-films-list',
@@ -28,6 +29,16 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
   filmsDataSource: FilmsDataSource
   columnsToDisplay = ['id', 'nazov', 'rok']
   expandedElement: Film | null | undefined
+  movie={
+    Title:'', 
+    Year: '',
+    Runtime: '',
+    Genre: '',
+    Director: '',
+    Actors: '',
+    Plot: '',
+    Poster: ''
+  }
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined
@@ -65,9 +76,11 @@ export class FilmsListComponent implements OnInit, AfterViewInit {
 
   selectFilm(film: Film) {
     this.selectedFilm = film.imdbID
-    console.log(this.selectedFilm)
-    
-    this.filmsService.getDetail(this.selectedFilm)
+    //console.log(this.selectedFilm)
+    fetch(environment.omdbServer+'apikey=8c8d8a8d&i='+this.selectedFilm)
+    .then(resp => resp.json())
+    .then(r => this.movie=r)
+    //this.filmsService.getDetail(this.selectedFilm)
 
 
     //console.log(this.selectedImdbID)

@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 export class FilmsService {
 
   url = environment.restServer + 'films/'
-  omdbUrl = environment.omdbServer +'?apikey=8c8d8a8d&i='
+  omdbUrl = environment.omdbServer +'apikey=8c8d8a8d&i='
 
 
   constructor(private http: HttpClient, private usersService: UsersService) { }
@@ -50,10 +50,11 @@ export class FilmsService {
       : undefined
   }
 
-  getDetail(imdbID: string): Observable<Detail>{
+  //Observable<Detail>
+  getDetail(imdbID: string) {
     this.imdb = imdbID
-    console.log( "response: ", this.http.get<Detail>(this.omdbUrl+imdbID))
-    return this.http.get<Detail>(this.omdbUrl+imdbID)
+    console.log( "response: ", this.http.get(this.omdbUrl+imdbID))
+    return this.http.get(this.omdbUrl+imdbID)
   
   }
 

@@ -42,9 +42,7 @@
                 <div class="example-element-detail"
                     [@detailExpand]="myRowData == expandedElement ? 'expanded' : 'collapsed'">
                     <div *ngIf="selectedFilm">
-                        <div class="example-element-diagram">
-                           {{movie.Poster}}
-                        </div>
+                        <img class="example-element-diagram" src={{movie.Poster}}>
                         <div class="example-element-description">
                             <strong>Title: </strong>{{movie.Title}}<br />
                             <strong>Year: </strong> {{movie.Year}}<br />
@@ -54,7 +52,6 @@
                             <strong>Actors: </strong>{{movie.Actors}}<br />
                             <strong>Plot: </strong>{{movie.Plot}}
                         </div>
-                        <!-- <strong>POster: </strong>{{movie.Poster}} -->
                     </div>
                 </div>
             </td>

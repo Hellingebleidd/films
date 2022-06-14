@@ -13,6 +13,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 
 
@@ -31,7 +33,8 @@ const modules = [
   MatDialogModule,
   MatSlideToggleModule,
   MatCheckboxModule,
-  MatTabsModule
+  MatTabsModule,
+  MatGridListModule
 ]
 
 @NgModule({

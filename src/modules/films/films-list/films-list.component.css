@@ -34,7 +34,8 @@ tr.example-detail-row {
     padding: 8px;
     font-weight: lighter;
     margin: 8px 0;
-    height: 104px;
+    height: 50%;
+    float: left;
   }
   
   /* .example-element-symbol {
@@ -45,6 +46,8 @@ tr.example-detail-row {
   
   .example-element-description {
     padding: 16px;
+    float: left;
+    /* max-width: 70%; */
   }
   
   .example-element-description-attribution {
